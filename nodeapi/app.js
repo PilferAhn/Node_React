@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const expressValidator = require('express-validator');
 // import mongoose
 const mongoose = require('mongoose');
@@ -23,11 +24,14 @@ mongoose.connection.on('error', err => {
 
 
 const PostRoutes = require('./routes/Post');
+const authRoutes = require('./routes/Auth');
 
 app.use(morgan("dev"));
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(expressValidator());
 app.use("/", PostRoutes); 
+app.use("/", authRoutes); 
 
 
 const port = process.env.PORT || 8080;
